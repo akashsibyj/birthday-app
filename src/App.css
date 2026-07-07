@@ -378,6 +378,22 @@
   color: #ded9ec;
 }
 
+.quote-reference {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  color: #c9a4ff;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.quote-personal {
+  margin: 0 0 14px;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #ded9ec;
+  line-height: 1.6;
+}
+
 .signature {
   margin: 0;
   font-size: 0.95rem;

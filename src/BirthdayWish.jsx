@@ -13,7 +13,7 @@ import photo8 from './assets/photos/photo8.jpg'
 const photos = [
   { src: photo4, caption: '2 years old', location: 'Hyderabad' },
   { src: photo5, caption: '4 years old', location: 'Kavyooor Home' },
-  { src: photo3, caption: "2004 — there's little me with you", location: 'Karuvatta' },
+  { src: photo3, caption: "2004 there's little me with you", location: 'Karuvatta' },
   { src: photo1, caption: '2023', location: 'Toronto Night' },
   { src: photo2, caption: '2023', location: 'Toronto Night' },
   { src: photo8, caption: 'Family reunion after 5 years', location: 'Kuwait' },
@@ -240,7 +240,7 @@ function BirthdayWish() {
           Birthday
         </h1>
         <p className="location-note">
-          🍁 All the way from Kuwait to Canada — miles apart, close at heart.
+          🍁 All the way from Kuwait to Canada, miles apart, close at heart.
         </p>
       </header>
 
@@ -361,11 +361,12 @@ function BirthdayWish() {
 
       <footer className="quote-section">
         <blockquote className="quote">
-          "Twenty-eight looks good on you — steady hands, sharper mind, and a heart
-          that's still the same one we grew up with. Wishing you a year as strong
-          and grounded as you've become."
+          "The Lord bless you and keep you; the Lord make his face to shine upon you,
+          and be gracious to you; the Lord lift up his countenance upon you, and give you peace."
         </blockquote>
-        <p className="signature">With love, always — no matter the distance. 🎂🇨🇦</p>
+        <p className="quote-reference">Numbers 6:24</p>
+        <p className="quote-personal">Wishing you a year as strong and grounded as you've become.</p>
+        <p className="signature">With love, always, no matter the distance. 🎂🇨🇦</p>
       </footer>
     </div>
   )
