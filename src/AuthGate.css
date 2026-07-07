@@ -1,0 +1,173 @@
+.gate {
+  min-height: 100svh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 20% 0%, #262832 0%, #14151a 45%, #0b0c0f 100%);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.gate-card {
+  width: 100%;
+  max-width: 380px;
+  background: linear-gradient(160deg, #3a3c46 0%, #2b2d35 55%, #232430 100%);
+  border-radius: 28px;
+  padding: clamp(20px, 5vw, 32px);
+  box-shadow:
+    0 20px 40px -12px rgba(0, 0, 0, 0.55),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.meme-img {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.meme-fallback {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: #1a1b21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.gate-question {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: gate-fade-in 0.35s ease;
+}
+
+.gate-question h2 {
+  margin: 0;
+  font-size: clamp(1.15rem, 4vw, 1.4rem);
+  color: #f0edf8;
+  font-weight: 600;
+}
+
+.gate-denied-title {
+  color: #ff6b6b !important;
+  letter-spacing: 2px;
+}
+
+.gate-deny-message {
+  margin: -6px 0 0;
+  color: #c9c6d6;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.gate-buttons {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+}
+
+.gate-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.15s ease;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f0edf8;
+}
+
+.gate-btn.yes {
+  background: linear-gradient(135deg, #c084fc, #9d5ce0);
+  border-color: transparent;
+  color: #1a1424;
+}
+
+.gate-btn.no {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.gate-btn:hover {
+  transform: translateY(-2px);
+}
+
+.gate-btn:active {
+  transform: translateY(0);
+}
+
+.gate-btn:focus-visible {
+  outline: 2px solid #c084fc;
+  outline-offset: 2px;
+}
+
+.gate-submit {
+  width: 100%;
+}
+
+.gate-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f0edf8;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.gate-input:focus {
+  border-color: #c084fc;
+}
+
+.gate-input.shake {
+  animation: gate-shake 0.4s ease;
+  border-color: #ff6b6b;
+}
+
+.gate-error {
+  margin: -8px 0 0;
+  color: #ff8b8b;
+  font-size: 0.85rem;
+}
+
+@keyframes gate-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gate-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-8px);
+  }
+  40%, 80% {
+    transform: translateX(8px);
+  }
+}
