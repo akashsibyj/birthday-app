@@ -30,11 +30,13 @@ function BirthdayWish() {
   const [imgError, setImgError] = useState({})
   const [retryToken, setRetryToken] = useState({})
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [imgLoaded, setImgLoaded] = useState({})
   const touchStartX = useRef(null)
   const isAnimating = useRef(false)
   const stageRef = useRef(null)
   const tiltEnabled = useRef(false)
   const retryCounts = useRef({})
+  const preloadedRef = useRef(new Set())
 
   const stars = useMemo(
     () =>
@@ -58,6 +60,22 @@ function BirthdayWish() {
       tiltEnabled.current = false
     }
   }, [])
+
+  useEffect(() => {
+    const toPreload = [
+      index,
+      (index + 1) % photos.length,
+      (index - 1 + photos.length) % photos.length,
+    ]
+    toPreload.forEach((i) => {
+      if (preloadedRef.current.has(i)) return
+      preloadedRef.current.add(i)
+      const img = new window.Image()
+      img.src = photos[i].src
+      img.onload = () => setImgLoaded((prev) => ({ ...prev, [i]: true }))
+      img.onerror = () => {}
+    })
+  }, [index])
 
   const goTo = useCallback((newIndex) => {
     if (isAnimating.current || photos.length === 0) return
@@ -133,6 +151,10 @@ function BirthdayWish() {
     }
     touchStartX.current = null
   }
+
+  const handleImgLoad = useCallback((i) => {
+    setImgLoaded((prev) => ({ ...prev, [i]: true }))
+  }, [])
 
   const handleImgError = (i) => {
     const attempts = retryCounts.current[i] || 0
@@ -268,36 +290,43 @@ function BirthdayWish() {
                   {imgError[i] ? (
                     <div className="img-fallback">Photo unavailable</div>
                   ) : (
-                    <img
-                      className="card-photo"
-                      src={retryToken[i] ? `${src}?retry=${retryToken[i]}` : src}
-                      alt={caption ? `${caption}, ${location}` : `Birthday memory ${i + 1}`}
-                      loading="lazy"
-                      onError={() => handleImgError(i)}
-                      draggable={false}
-                    />
+                    <>
+                      {!imgLoaded[i] && <div className="card-skeleton" aria-hidden="true" />}
+                      <img
+                        className={`card-photo${imgLoaded[i] ? ' loaded' : ''}`}
+                        src={retryToken[i] ? `${src}?retry=${retryToken[i]}` : src}
+                        alt={caption ? `${caption}, ${location}` : `Birthday memory ${i + 1}`}
+                        loading="eager"
+                        fetchPriority={isActive ? 'high' : absOffset === 1 ? 'auto' : 'low'}
+                        onLoad={() => handleImgLoad(i)}
+                        onError={() => handleImgError(i)}
+                        draggable={false}
+                      />
+                    </>
                   )}
                   <div className="card-scrim" />
-                  <div className="overlay-bottom">
-                    {caption ? (
-                      <div className="card-caption">
-                        <p className="caption-primary">{caption}</p>
-                        {location && <p className="caption-location">{location}</p>}
-                      </div>
-                    ) : (
-                      <div className="chip-lines">
-                        <span className="chip-bar thick" />
-                        <span className="chip-bar thin" />
-                        <div className="chip-dash-row">
-                          <span className="chip-dash" />
-                          <span className="chip-tiny-dot" />
-                          <span className="chip-dash" />
-                          <span className="chip-tiny-dot" />
-                          <span className="chip-dash" />
+                  {imgLoaded[i] && (
+                    <div className="overlay-bottom">
+                      {caption ? (
+                        <div className="card-caption">
+                          <p className="caption-primary">{caption}</p>
+                          {location && <p className="caption-location">{location}</p>}
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      ) : (
+                        <div className="chip-lines">
+                          <span className="chip-bar thick" />
+                          <span className="chip-bar thin" />
+                          <div className="chip-dash-row">
+                            <span className="chip-dash" />
+                            <span className="chip-tiny-dot" />
+                            <span className="chip-dash" />
+                            <span className="chip-tiny-dot" />
+                            <span className="chip-dash" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               )
             })}

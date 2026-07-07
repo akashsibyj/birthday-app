@@ -157,6 +157,38 @@
   object-fit: contain;
   display: block;
   user-select: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.card-photo.loaded {
+  opacity: 1;
+}
+
+.card-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #252529 25%,
+    #323238 50%,
+    #252529 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-skeleton {
+    animation: none;
+    background: #252529;
+  }
 }
 
 .card-scrim {
